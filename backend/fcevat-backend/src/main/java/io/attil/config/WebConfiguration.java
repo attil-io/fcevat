@@ -12,11 +12,4 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan("io.attil.web")
 public class WebConfiguration {
 
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/WEB-INF/jsp/");
-		resolver.setSuffix(".jsp");
-		return resolver;
-	}
 }
