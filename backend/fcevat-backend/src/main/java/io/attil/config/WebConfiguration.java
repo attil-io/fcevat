@@ -10,6 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @EnableWebMvc
 @ComponentScan("io.attil.web")
+@ComponentScan("io.attil.service")
 public class WebConfiguration {
 
 }
