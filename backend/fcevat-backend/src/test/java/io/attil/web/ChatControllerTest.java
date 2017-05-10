@@ -1,6 +1,7 @@
 package io.attil.web;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Test;
@@ -23,8 +24,8 @@ public class ChatControllerTest {
 	private ChatController chatController;
 	
 	@Test
-	public void test1() throws Exception {
+	public void testMessages() throws Exception {
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(chatController).build();
-		mockMvc.perform(post("/message")).andExpect(status().isOk());
+		mockMvc.perform(get("/messages")).andExpect(status().isOk()).andExpect(content().json("[{'text':'hello'},{'text':'hello'},{'text':'hello'},{'text':'hello'},{'text':'hello'}]"));
 	}
 }
