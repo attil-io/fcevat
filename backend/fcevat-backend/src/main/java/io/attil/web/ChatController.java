@@ -16,8 +16,9 @@ public class ChatController {
 	@Autowired
 	private ChatService chatService;
 	
-	@RequestMapping("/messages")
+	@RequestMapping(value="/messages", produces="application/json")
 	public List<Message> getMessages() {
-		return chatService.getMessages();
+		List<Message> messages = chatService.getMessages();
+		return messages;
 	}
 }

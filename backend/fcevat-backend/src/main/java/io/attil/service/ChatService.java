@@ -12,8 +12,7 @@ public class ChatService {
 
 	public List<Message> getMessages() {
 		List<Message> ret = new ArrayList<>();
-		Message msg = new Message();
-		msg.setText("hello");
+		Message msg = new Message("hello");
 		ret.add(msg);
 		ret.add(msg);
 		ret.add(msg);
