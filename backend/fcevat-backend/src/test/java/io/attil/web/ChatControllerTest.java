@@ -13,37 +13,36 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import io.attil.config.PersistenceContext;
 import io.attil.config.WebConfiguration;
 import io.attil.domain.Message;
 import io.attil.service.ChatService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { WebConfiguration.class })
+@ContextConfiguration(classes = { WebConfiguration.class, PersistenceContext.class })
 @WebAppConfiguration
 public class ChatControllerTest {
 
-	@Mock
-	private ChatService chatService;
-	
-	@InjectMocks
-	private ChatController chatController;
+	@Mock private ChatService chatService;
 
-	@Before
-	public void setup() {
-		MockitoAnnotations.initMocks(this);
+	@InjectMocks private ChatController chatController;
+
+	@Before public void setup() { 
+		MockitoAnnotations.initMocks(this); 
 	}
-	
-	@Test
-	public void testMessages() throws Exception {
+
+	@Test public void testMessages() throws Exception { 
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(chatController).build();
-		when(chatService.getMessages()).thenReturn(new LinkedList<Message>(){{ add(new Message("hello, world")); }});
+		when(chatService.getMessages()).thenReturn(new LinkedList<Message>(){{
+				add(new Message("hello, world")); }});
 		mockMvc.perform(get("/messages")).andExpect(status().isOk()).andExpect(content().json("[{\"text\":\"hello, world\"}]"));
 	}
+
 }
