@@ -39,7 +39,9 @@ public class PersistenceContext {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment env) {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource);
-		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+		hibernateJpaVendorAdapter.setGenerateDdl(true);
+		entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
 		entityManagerFactoryBean.setPackagesToScan("io.attil.persistence");
 
 		Properties jpaProperties = new Properties();
@@ -61,4 +63,5 @@ public class PersistenceContext {
 		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;
 	}
+
 }

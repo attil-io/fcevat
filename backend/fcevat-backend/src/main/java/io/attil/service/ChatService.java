@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.attil.domain.Message;
+import io.attil.persistence.entities.MessageEntity;
 import io.attil.persistence.repository.MessagesRepository;
 
 @Service
@@ -16,13 +17,14 @@ public class ChatService {
 	private MessagesRepository messagesRepository;
 	
 	public List<Message> getMessages() {
+		MessageEntity m = new MessageEntity("hello baby");
+		messagesRepository.save(m);
+		Iterable<MessageEntity> messageEntities = messagesRepository.findAll();
 		List<Message> ret = new ArrayList<>();
-		Message msg = new Message("hello");
-		ret.add(msg);
-		ret.add(msg);
-		ret.add(msg);
-		ret.add(msg);
-		ret.add(msg);
+		for (MessageEntity me: messageEntities) {
+			Message msg = new Message(me.toString());
+			ret.add(msg);
+		}
 		return ret;
 	}
 }

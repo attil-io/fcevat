@@ -13,6 +13,10 @@ public class MessageEntity {
 	private Long id;
 	private String text;
 	
+	public MessageEntity() {
+		
+	}
+	
 	public MessageEntity(String text) {
 		this.text = text;
 	}
