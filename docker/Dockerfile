@@ -1,9 +1,13 @@
 FROM openjdk:8-jre
 
+ENV BASE_DIR /usr/local
 ENV CATALINA_HOME /usr/local/tomcat
+ENV H2_HOME /usr/local/h2
+ENV H2_URL http://repo2.maven.org/maven2/com/h2database/h2/1.4.195/h2-1.4.195.jar
 ENV PATH $CATALINA_HOME/bin:$PATH
 RUN mkdir -p "$CATALINA_HOME"
-WORKDIR $CATALINA_HOME
+RUN mkdir -p "$H2_HOME"
+WORKDIR $BASE_DIR
 
 # let "Tomcat Native" live somewhere isolated
 ENV TOMCAT_NATIVE_LIBDIR $CATALINA_HOME/native-jni-lib
@@ -40,11 +44,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV GPG_KEYS 05AB33110949707C93A279E3D3EFE6B686867BA6 07E48665A34DCAFAE522E5E6266191C37C037D42 47309207D818FFD8DCD3F83F1931D684307A10A5 541FBE7D8F78B25E055DDEE13C370389288584E7 61B832AC2F1C5A90F0F9B00A1C506407564C17A3 713DA88BE50911535FE716F5208B0AB1D63011C7 79F7026C690BAA50B92CD8B66A3AD3F4F22C4FED 9BA44C2621385CB966EBA586F72C284D731FABEE A27677289986DB50844682F8ACB77FC2E86E29AC A9C5DF4D22E99998D9875A5110C01C5A2F6059E7 DCFD35E0BF8CA7344752DE8B6FB21E8933C60243 F3A04C595DB5B6A5F1ECA43E3B7BBB100D811BBE F7DA48BB64BCB84ECBA7EE6935CD23C10D498E23
 RUN set -ex; \
 	for key in $GPG_KEYS; do \
-		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+		gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key" || gpg --keyserver keyserver.ubuntu.com --recv-keys "$key" || echo "XXX Failed to receive key $key, please install manually!"; \
 	done
 
 ENV TOMCAT_MAJOR 8
-ENV TOMCAT_VERSION 8.5.12
+ENV TOMCAT_VERSION 8.5.15
 
 # https://issues.apache.org/jira/browse/INFRA-8753?focusedCommentId=14735394#comment-14735394
 ENV TOMCAT_TGZ_URL https://www.apache.org/dyn/closer.cgi?action=download&filename=tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
@@ -87,8 +91,9 @@ RUN set -x \
 	&& rm bin/tomcat-native.tar.gz
 
 
-COPY tomcat-users.xml /usr/local/tomcat/conf
-COPY context.xml /usr/local/tomcat/webapps/manager/META-INF
+COPY tomcat-users.xml $CATALINA_HOME/conf
+COPY context.xml $CATALINA_HOME/webapps/manager/META-INF
+COPY start_script.sh $BASE_DIR
 
 # verify Tomcat Native is working properly
 RUN set -e \
@@ -100,6 +105,11 @@ RUN set -e \
 		exit 1; \
 	fi
 
+
+RUN cd "$H2_HOME" \
+	&& wget -c -O h2.jar "$H2_URL"
+
 EXPOSE 8080
 
-CMD ["catalina.sh", "run"]
+CMD ["start_script.sh"]
+
