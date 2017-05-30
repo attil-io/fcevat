@@ -20,6 +20,6 @@ public class ChatControllerTestIntegration {
 			.statusCode(200)
 			.body(equalTo("[{\"text\":\"hello\"},{\"text\":\"hello\"},{\"text\":\"hello\"},{\"text\":\"hello\"},{\"text\":\"hello\"}]"))
 		.given()
-		.when().post("/messages");
+		.when().get("/messages");
 	}
 }
