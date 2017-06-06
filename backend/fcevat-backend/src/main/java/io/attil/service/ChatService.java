@@ -17,12 +17,10 @@ public class ChatService {
 	private MessagesRepository messagesRepository;
 	
 	public List<Message> getMessages() {
-		MessageEntity m = new MessageEntity("hello baby");
-		messagesRepository.save(m);
 		Iterable<MessageEntity> messageEntities = messagesRepository.findAll();
 		List<Message> ret = new ArrayList<>();
 		for (MessageEntity me: messageEntities) {
-			Message msg = new Message(me.toString());
+			Message msg = new Message(me.text);
 			ret.add(msg);
 		}
 		return ret;
