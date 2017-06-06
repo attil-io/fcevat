@@ -59,7 +59,7 @@ task prefillDatabase {
     configurations.compile.each {File file ->
         loader.addURL(file.toURL())
     }
-    def sql = groovy.sql.Sql.newInstance('jdbc:h2:tcp://172.17.0.2:9092/~/test', 'sa', '', 'org.h2.Driver' )
+    def sql = groovy.sql.Sql.newInstance(dbConnection, dbUser, dbPassword, dbClass)
     String sqlString = new File('src/integtest/resources/setup_integration_tests.sql').text
    
     sql.execute sqlString
