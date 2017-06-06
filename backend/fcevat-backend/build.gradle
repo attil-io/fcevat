@@ -60,7 +60,8 @@ task prefillDatabase {
         loader.addURL(file.toURL())
     }
     def sql = groovy.sql.Sql.newInstance(dbConnection, dbUser, dbPassword, dbClass)
-    String sqlString = new File('src/integtest/resources/setup_integration_tests.sql').text
+    
+    String sqlString = new File(sourceSets.integtest.resources.srcDirs.iterator().next().toString() + '/setup_integration_tests.sql').text
    
     sql.execute sqlString
 
