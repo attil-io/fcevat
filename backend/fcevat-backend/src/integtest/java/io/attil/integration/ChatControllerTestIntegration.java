@@ -18,7 +18,7 @@ public class ChatControllerTestIntegration {
 	public void testAllMessages() {
 		expect()
 			.statusCode(200)
-			.body(equalTo("[{\"text\":\"hello\"},{\"text\":\"hello\"},{\"text\":\"hello\"},{\"text\":\"hello\"},{\"text\":\"hello\"}]"))
+			.body(equalTo("[{\"text\":\"hello\"},{\"text\":\"world\"}]"))
 		.given()
 		.when().get("/messages");
 	}

@@ -14,6 +14,13 @@ repositories {
 	mavenCentral()
 }
 
+sourceSets {
+    integtest {
+        java.srcDir 'src/integtest/java/io/attil/integration'
+        resources.srcDir 'src/integtest/resources'
+    }
+}
+
 dependencies {
 	compile 'org.springframework:spring-webmvc:4.3.+'
 	compile 'javax.servlet:javax.servlet-api:3.+'
@@ -28,13 +35,19 @@ dependencies {
 	compile 'com.zaxxer:HikariCP:2.6.1'
 	compile 'org.hibernate:hibernate-entitymanager:5.2.10.Final'
 
-
-	
-	
 	testCompile 'org.springframework:spring-test:4.3.7.RELEASE'
 	testCompile 'junit:junit:4.12'
 	testCompile 'org.mockito:mockito-core:1.+'
 	testCompile 'io.rest-assured:rest-assured:3.0.3'
+
+	integtestCompile sourceSets.main.output
+	integtestCompile sourceSets.test.output 
+	
+	integtestCompile configurations.compile
+	integtestCompile configurations.testCompile 
+	
+	integtestRuntime configurations.runtime
+	integtestRuntime configurations.testRuntime
 }
 
 task deploy(type: Exec) {
@@ -47,9 +60,26 @@ task prefillDatabase {
         loader.addURL(file.toURL())
     }
     def sql = groovy.sql.Sql.newInstance('jdbc:h2:tcp://172.17.0.2:9092/~/test', 'sa', '', 'org.h2.Driver' )
-    String sqlString = new File('src/test/resources/setup_integration_tests.sql').text
+    String sqlString = new File('src/integtest/resources/setup_integration_tests.sql').text
    
     sql.execute sqlString
 
     sql.close()
+}
+
+task integtest(type: Test) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = 'Runs the integration tests.' 
+
+    maxHeapSize = '1024m' 
+
+    testClassesDir = sourceSets.integtest.output.classesDir
+    classpath = sourceSets.integtest.runtimeClasspath 
+
+    binResultsDir = file("$buildDir/integration-test-results/binary/integtest")
+
+    reports { 
+        html.destination = "$buildDir/reports/integration-test"
+        junitXml.destination = "$buildDir/integration-test-results"
+    }
 }
