@@ -1,17 +1,26 @@
 package io.attil.integration;
 
+import static io.restassured.RestAssured.expect;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import io.restassured.RestAssured;
-import static io.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.equalTo;
 
 public class ChatControllerTestIntegration {
 
 	@Before
-	public void setup() {
-		RestAssured.baseURI = "http://172.17.0.2:8080/fcevat";
+	public void setup() throws IOException {
+		Properties prop = new Properties();
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		InputStream stream = loader.getResourceAsStream("integtest.properties");
+		prop.load(stream);
+		RestAssured.baseURI = prop.getProperty("baseUri");
 	}
 	
 	@Test
