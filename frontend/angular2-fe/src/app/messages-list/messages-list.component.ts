@@ -17,11 +17,11 @@ import { Message } from '../message';
 export class MessagesListComponent implements OnInit {
   messages: Message[];
 
-  constructor(private messagesService: MessagesService) {
-    this.messages = messagesService.getAll();
+  constructor(private _messagesService: MessagesService) {
   }
 
   ngOnInit() {
+    this.messages = this._messagesService.getAll();
   }
 
 }
