@@ -4,10 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { MessagesListComponent } from './messages-list/messages-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MessagesListComponent
   ],
   imports: [
     BrowserModule,
