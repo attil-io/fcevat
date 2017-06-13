@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { MessagesListComponent } from './messages-list/messages-list.component';
+import { MessageDetailsComponent } from './message-details/message-details.component';
 
 const routes: Routes = [
   {
@@ -10,6 +11,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/messages',
     pathMatch: 'full'
+  },
+  {
+    path: 'messages/:id',
+    component: MessageDetailsComponent
   },
 ];
 

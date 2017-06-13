@@ -8,12 +8,11 @@ import { MessageDetailsComponent } from '../message-details/message-details.comp
   template: `
   <ul>
     <li *ngFor="let message of messages">
-      <a href="#" (click)="selectMessage(message)">
+      <a [routerLink]="['/messages', message.id]">
         {{message.text}}
       </a>
     </li>
   </ul>
-  <app-message-details [selectedMessage]="selectedMessage"></app-message-details>
  `,
   styleUrls: ['./messages-list.component.scss']
 })
