@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from "../messages.service";
 import { Message } from '../message';
+import { MessageDetailsComponent } from '../message-details/message-details.component';
 
 @Component({
   selector: 'app-messages-list',
@@ -12,10 +13,7 @@ import { Message } from '../message';
       </a>
     </li>
   </ul>
-  <section *ngIf="selectedMessage">
-    <h2>{{selectedMessage.text}}</h2>
-  </section>
-
+  <app-message-details [selectedMessage]="selectedMessage"></app-message-details>
  `,
   styleUrls: ['./messages-list.component.scss']
 })
