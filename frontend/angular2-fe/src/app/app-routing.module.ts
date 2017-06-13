@@ -1,3 +1,4 @@
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessageDetailsComponent } from './message-details/message-details.component';
@@ -18,5 +19,9 @@ const routes: Routes = [
   },
 ];
 
-export const appRouterModule = RouterModule.forRoot(routes);
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
 

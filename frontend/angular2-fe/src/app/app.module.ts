@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessageDetailsComponent } from './message-details/message-details.component';
 
-import { appRouterModule } from "./app.routes";
+import { AppRoutingModule } from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { appRouterModule } from "./app.routes";
     BrowserModule,
     FormsModule,
     HttpModule,
-    appRouterModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
