@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessagesService } from "../messages.service";
 import { Message } from "../message";
 
@@ -9,6 +9,7 @@ import { Message } from "../message";
    <section *ngIf="selectedMessage">
      <h2>{{selectedMessage.text}}</h2>
    </section>
+   <button (click)="gotoMessagesList()">Back to messages list</button>
   `,
   styles: []
 })
@@ -17,7 +18,8 @@ export class MessageDetailsComponent implements OnInit {
   sub: any;
 
   constructor(private messagesService: MessagesService,
-               private route: ActivatedRoute) { }
+               private route: ActivatedRoute,
+               private router: Router) { }
 
   ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
@@ -29,6 +31,11 @@ export class MessageDetailsComponent implements OnInit {
 
   ngOnDestroy(){
         this.sub.unsubscribe();
+  }
+
+  gotoMessagesList(){
+        let link = ['/messages'];
+        this.router.navigate(link);
   }
 
 
