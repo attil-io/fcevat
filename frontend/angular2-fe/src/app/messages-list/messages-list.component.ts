@@ -7,21 +7,31 @@ import { Message } from '../message';
   template: `
   <ul>
     <li *ngFor="let message of messages">
-      {{message.text}}
+      <a href="#" (click)="selectMessage(message)">
+        {{message.text}}
+      </a>
     </li>
   </ul>
+  <section *ngIf="selectedMessage">
+    <h2>{{selectedMessage.text}}</h2>
+  </section>
 
  `,
   styleUrls: ['./messages-list.component.scss']
 })
 export class MessagesListComponent implements OnInit {
   messages: Message[];
+  selectedMessage: Message;
 
   constructor(private _messagesService: MessagesService) {
   }
 
   ngOnInit() {
     this.messages = this._messagesService.getAll();
+  }
+
+  selectMessage(message){
+      this.selectedMessage = message;
   }
 
 }
