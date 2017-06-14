@@ -1,9 +1,10 @@
     <form>
       <div>
         <label for="messagetext">Text: </label>
-        <input type="text" name="messagetext" [(ngModel)]="message.text">
+        <input type="text" name="messagetext" required [(ngModel)]="message.text" #messagetext>
       </div>
       <div>
-        You wrote: <i>{{message.text}}</i>.
+        You wrote: <i>{{message.text}}</i>. <br />
+        <!-- input "messagetext" class is: {{ messagetext.className }} -->
       </div>
     </form>
