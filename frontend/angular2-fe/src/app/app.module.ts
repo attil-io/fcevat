@@ -8,12 +8,14 @@ import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MessageDetailsComponent } from './message-details/message-details.component';
 
 import { AppRoutingModule } from "./app-routing.module";
+import { WriteMessageComponent } from './write-message/write-message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MessagesListComponent,
-    MessageDetailsComponent
+    MessageDetailsComponent,
+    WriteMessageComponent
   ],
   imports: [
     BrowserModule,
