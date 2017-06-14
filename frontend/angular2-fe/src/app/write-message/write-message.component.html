@@ -1,10 +1,14 @@
     <form>
       <div>
         <label for="messagetext">Text: </label>
-        <input type="text" name="messagetext" required [(ngModel)]="message.text" #messagetext>
+        <input type="text" name="messagetext" required [(ngModel)]="message.text" #messagetext="ngModel">
       </div>
       <div>
         You wrote: <i>{{message.text}}</i>. <br />
         <!-- input "messagetext" class is: {{ messagetext.className }} -->
+	<div [hidden]="messagetext.valid || messagetext.pristine" class="error">
+	    Please, enter a message.
+	</div>
+
       </div>
     </form>
