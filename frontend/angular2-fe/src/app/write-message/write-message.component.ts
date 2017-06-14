@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Message } from "../message";
 
 @Component({
   selector: 'app-write-message',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class WriteMessageComponent implements OnInit {
+  message: Message;
 
-  constructor() { }
+  constructor() { 
+    this.message = {id : 0, text: "Hello"};
+  }
 
   ngOnInit() {
   }

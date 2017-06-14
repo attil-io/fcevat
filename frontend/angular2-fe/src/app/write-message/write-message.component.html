@@ -1,3 +1,9 @@
-<p>
-  write-message works!
-</p>
+    <form>
+      <div>
+        <label for="messagetext">Text: </label>
+        <input type="text" name="messagetext" [(ngModel)]="message.text">
+      </div>
+      <div>
+        You wrote: <i>{{message.text}}</i>.
+      </div>
+    </form>
