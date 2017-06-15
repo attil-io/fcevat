@@ -19,4 +19,12 @@ export class MessagesService {
     return MESSAGES.find(p => p.id === id);
   }
 
+  save(message: Message){
+    let originalMessage = MESSAGES.find(m => m.id === message.id);
+    if (originalMessage) {
+       Object.assign(originalMessage, message);
+    }
+  }
+
 }
+

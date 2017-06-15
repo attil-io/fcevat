@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessagesService } from "../messages.service";
 import { Message } from "../message";
 
 @Component({
@@ -9,15 +11,19 @@ import { Message } from "../message";
 export class WriteMessageComponent implements OnInit {
   message: Message;
 
-  constructor() { 
-    this.message = {id : 0, text: "Hello"};
+  constructor(private _messagesService: MessagesService,
+               private route: ActivatedRoute,
+               private router: Router) { 
+    this.message = {id : 1, text: "Hello"};
   }
 
   ngOnInit() {
   }
 
   saveMessageDetails(){
-	  alert(`saved!!! ${JSON.stringify(this.message)}`);
+    this._messagesService.save(this.message);
+    let link = ['/messages'];
+    this.router.navigate(link);
   }
 
 }
