@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+
 
 import { Message } from './message';
 
@@ -14,7 +17,8 @@ export class MessagesService {
   getAll() : Observable<Message[]> {
     let messages$ = this.http
       .get(`${this.baseUrl}/messages`, {headers: this.getHeaders()})
-      .map(this.mapMessages);
+      .map(this.mapMessages)
+      .catch(this.handleError);
       return messages$;
   }
 
@@ -24,8 +28,14 @@ export class MessagesService {
     return headers;
   }
 
+  private handleError (error: any) {
+    let errorMsg = error.message || `Unknown error`;
+    console.error(errorMsg);
+    return Observable.throw(errorMsg);
+  }
+
   mapMessages(response:Response): Message[]{
-	  return response.json().results.map(this.toMessage)
+    return response.json().map(this.toMessage)
   }
 
   toMessage(r:any): Message{

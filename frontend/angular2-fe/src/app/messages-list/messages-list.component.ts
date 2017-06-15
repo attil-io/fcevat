@@ -13,18 +13,23 @@ import { MessageDetailsComponent } from '../message-details/message-details.comp
       </a>
     </li>
   </ul>
+    <section *ngIf="errorMessage">
+      {{errorMessage}}
+    </section>
+
  `,
   styleUrls: ['./messages-list.component.scss']
 })
 export class MessagesListComponent implements OnInit {
   messages: Message[];
   selectedMessage: Message;
+  errorMessage: string = '';
 
   constructor(private _messagesService: MessagesService) {
   }
 
   ngOnInit() {
-    this.messages = this._messagesService.getAll();
+    this._messagesService.getAll().subscribe(msgs => this.messages = msgs, error => this.errorMessage = error);
   }
 
   selectMessage(message){
