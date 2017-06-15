@@ -16,4 +16,8 @@ export class WriteMessageComponent implements OnInit {
   ngOnInit() {
   }
 
+  saveMessageDetails(){
+	  alert(`saved!!! ${JSON.stringify(this.message)}`);
+  }
+
 }
