@@ -1,29 +1,47 @@
 import { Injectable } from '@angular/core';
+import { Http, Response, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 import { Message } from './message';
 
-const MESSAGES : Message[] = [
-        {id: 1, text: 'Hello, world!'},
-        {id: 2, text: 'Nice day, today!'},
-        {id: 3, text: 'Oh, yeah!'},
-    ];
 @Injectable()
 export class MessagesService {
+  private baseUrl: string = 'http://172.17.0.2:8080/fcevat/';
 
-  constructor() { }
+  constructor(private http : Http) { }
 
-  getAll() : Message[] {
-    return MESSAGES;
+  getAll() : Observable<Message[]> {
+    let messages$ = this.http
+      .get(`${this.baseUrl}/messages`, {headers: this.getHeaders()})
+      .map(this.mapMessages);
+      return messages$;
+  }
+
+  private getHeaders() {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    return headers;
+  }
+
+  mapMessages(response:Response): Message[]{
+	  return response.json().results.map(this.toMessage)
+  }
+
+  toMessage(r:any): Message{
+	  let message = <Message>({
+                     id: 0,
+                     text: r.text
+          });
+          return message;
   }
 
   get(id : number) : Message {
-    return MESSAGES.find(p => p.id === id);
+    return {id: 0, text: 'hello'};
   }
 
   save(message: Message){
-    let originalMessage = MESSAGES.find(m => m.id === message.id);
-    if (originalMessage) {
-       Object.assign(originalMessage, message);
-    }
+    // NOP for now
   }
 
 }
