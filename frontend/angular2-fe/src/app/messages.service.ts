@@ -17,7 +17,7 @@ export class MessagesService {
   getAll() : Observable<Message[]> {
     let messages$ = this.http
       .get(`${this.baseUrl}/messages`, {headers: this.getHeaders()})
-      .map(this.mapMessages)
+      .map((res) => this.mapMessages(res))
       .catch(this.handleError);
       return messages$;
   }
