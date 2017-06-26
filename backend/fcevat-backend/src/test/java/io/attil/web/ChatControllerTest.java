@@ -41,7 +41,7 @@ public class ChatControllerTest {
 	@Test public void testMessages() throws Exception { 
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(chatController).build();
 		when(chatService.getMessages()).thenReturn(new LinkedList<Message>(){{
-				add(new Message("hello, world")); }});
+				add(new Message(1L, "hello, world")); }});
 		mockMvc.perform(get("/messages")).andExpect(status().isOk()).andExpect(content().json("[{\"text\":\"hello, world\"}]"));
 	}
 

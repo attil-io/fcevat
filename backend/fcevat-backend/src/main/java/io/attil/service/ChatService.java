@@ -20,7 +20,7 @@ public class ChatService {
 		Iterable<MessageEntity> messageEntities = messagesRepository.findAll();
 		List<Message> ret = new ArrayList<>();
 		for (MessageEntity me: messageEntities) {
-			Message msg = new Message(me.text);
+			Message msg = new Message(me.getId(), me.text);
 			ret.add(msg);
 		}
 		return ret;
