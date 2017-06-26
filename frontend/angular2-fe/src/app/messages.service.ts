@@ -40,7 +40,7 @@ export class MessagesService {
 
   toMessage(r:any): Message{
 	  let message = <Message>({
-                     id: 0,
+                     id: r.id,
                      text: r.text
           });
           return message;
