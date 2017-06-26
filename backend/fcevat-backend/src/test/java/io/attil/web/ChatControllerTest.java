@@ -47,7 +47,7 @@ public class ChatControllerTest {
 	
 	@Test public void testWrite() throws Exception {
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(chatController).build();
-		mockMvc.perform(post("/write")).andExpect(status().isOk());
+		mockMvc.perform(post("/write").content("hello, world")).andExpect(status().isOk());
 	}
 
 }

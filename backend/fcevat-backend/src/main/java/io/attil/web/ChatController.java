@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class ChatController {
 	
 	@CrossOrigin
 	@RequestMapping(value="/write", method=POST)
-	public void write() {
-		System.out.println("XXX WRITE!");
+	public void write(@RequestBody String message) {
+		System.out.println("XXX WRITE: " + message);
 	}
 }
