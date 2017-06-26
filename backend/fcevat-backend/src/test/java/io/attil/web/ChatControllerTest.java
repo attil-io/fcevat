@@ -2,6 +2,7 @@ package io.attil.web;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -43,6 +43,11 @@ public class ChatControllerTest {
 		when(chatService.getMessages()).thenReturn(new LinkedList<Message>(){{
 				add(new Message(1L, "hello, world")); }});
 		mockMvc.perform(get("/messages")).andExpect(status().isOk()).andExpect(content().json("[{\"text\":\"hello, world\"}]"));
+	}
+	
+	@Test public void testWrite() throws Exception {
+		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(chatController).build();
+		mockMvc.perform(post("/write")).andExpect(status().isOk());
 	}
 
 }
