@@ -25,4 +25,9 @@ public class ChatService {
 		}
 		return ret;
 	}
+
+	public void write(String message) {
+		System.out.println("WRITE MSG IN SVC: " + message);
+	}
+
 }

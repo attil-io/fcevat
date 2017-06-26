@@ -30,6 +30,6 @@ public class ChatController {
 	@CrossOrigin
 	@RequestMapping(value="/write", method=POST)
 	public void write(@RequestBody String message) {
-		System.out.println("XXX WRITE: " + message);
+		chatService.write(message);
 	}
 }
