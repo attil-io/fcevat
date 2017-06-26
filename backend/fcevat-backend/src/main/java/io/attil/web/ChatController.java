@@ -16,7 +16,7 @@ public class ChatController {
 	@Autowired
 	private ChatService chatService;
 	
-        @CrossOrigin
+	@CrossOrigin
 	@RequestMapping(value="/messages", produces="application/json")
 	public List<Message> getMessages() {
 		List<Message> messages = chatService.getMessages();
