@@ -27,7 +27,8 @@ public class ChatService {
 	}
 
 	public void write(String message) {
-		System.out.println("WRITE MSG IN SVC: " + message);
+		MessageEntity messageEntity = new MessageEntity(message);
+		messagesRepository.save(messageEntity);
 	}
 
 }
