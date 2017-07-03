@@ -1,5 +1,8 @@
 package io.attil.web;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -46,8 +49,10 @@ public class ChatControllerTest {
 	}
 	
 	@Test public void testWrite() throws Exception {
+		final String MESSAGE = "hello, world";
 		MockMvc mockMvc = MockMvcBuilders.standaloneSetup(chatController).build();
-		mockMvc.perform(post("/write").content("hello, world")).andExpect(status().isOk());
+		mockMvc.perform(post("/write").content(MESSAGE)).andExpect(status().isOk());
+		verify(chatService, times(1)).write(eq(MESSAGE));
 	}
 
 }
