@@ -47,11 +47,13 @@ export class MessagesService {
   }
 
   get(id : number) : Message {
-    return {id: 0, text: 'hello'};
+	return {id: 0, text: 'hello'};
   }
 
   save(message: Message){
-    // NOP for now
+    console.log("saving: ", message);
+    this.http.post(`${this.baseUrl}/write`, message.text, {headers: this.getHeaders()}).subscribe();
+    console.log("request sent");
   }
 
 }
